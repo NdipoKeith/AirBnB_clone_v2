@@ -23,7 +23,7 @@ class Create_State(unittest.TestCase):
         initial_count = self.get_record_count()
         command = ("create State name =\"California\"")
         result = self.interpreter.do_create(command)
-        self.assertGreater(result, initial_count)
+        self.assertEqual((result-initial_count), 1)
 
     def test_get_record_count(self):
         """test to get the number of count after creating state in db states"""
