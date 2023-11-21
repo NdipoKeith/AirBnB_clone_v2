@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 -- this script prepares a MySQL server for the project
 -- create project developement database with the name : hbnb_dev_db
 CREATE DATABASE IF NOT EXISTS hbnb_dev_db;
@@ -16,3 +17,13 @@ Footer navigation
 
     Terms
     Privacy
+=======
+--a script to prepare a MySQL server for the project.
+--Greant user privilege for perfomance_schema
+--not fail if database exist
+CREATE DATABASE IF NOT EXISTS hbnb_dev_db;
+CREATE USER IF NOT EXISTS 'hbnb_dev'@'localhost' IDENTIFIED BY 'hbnb_dev_pwd';
+GRANT ALL PRIVILEGES ON hbnb_dev_db.* TO 'hbnb_dev'@'localhost';
+GRANT SELECT ON performance_schema.* TO 'hbnb_dev'@'localhost';
+FLUSH PRIVILEGES;
+>>>>>>> 9b0d7acde5f8f5a648b5869caca175cd3366da5e
