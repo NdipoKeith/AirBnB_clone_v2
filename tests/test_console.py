@@ -2,16 +2,54 @@
 """unittest for console.py"""
 import unittest
 from console import CommandInterpreter
+import os
+import mysql.connector
+
+
+class Create_State(unittest.TestCase):
+    """Test case to validate if the State created
+    adds a new record in the db"""
+    def set_up(self):
+        self.conn = mysql.connector.connect(
+                user="hbnb_test"
+                passwd="hbnb_test_pwd"
+                host="localhost"
+                database="hbnb_env_db"
+                )
+        self.cursor = self.conn.cursor()
+
+    def test_create_state(state):
+        """tests to create state"""
+        initial_count = self.get_record_count()
+        command = ("create State name =\"California\"")
+        result = self.interpreter.do_create(command)
+        self.assertGreater(result, initial_count)
+
+    def test_get_record_count(self):
+        """test to get the number of count after creating state in db states"""
+        self.cursor.execute("SELECT COUNT(*) FROM states")
+        result = self.cursor.fetchone()[0]
+        return result
+
+    def test_execute_command(self, command):
+        """test with eample of executing a command in console"""
+        pass
+
+    def tearDown(self):
+        """teardown the class"""
+        self.cursor.close()
+        self.conn.clode()
+
 
 class CommandInterpreter(unittest.TestCase):
-    
+
     def setUp(self):
         """setup class"""
         self.interpreter = commandInterpreter()
 
     def test_create_with_valid_str(self):
         """create object with valid string"""
-        command = "create MyObj name = \ "Tiny House\""
+        command = "create MyObj name = \"Tiny House\""
         result = self.interpreter.do_create(command)
         sel.assertEqual(result, "MyObj(name='Tiny House')")
 
@@ -51,6 +89,7 @@ class CommandInterpreter(unittest.TestCase):
         help_all()
         self.assertEqual(captured_output, expected_output)
 
+
 class DoAllTests(unittest.TestCase):
 
     def test_do_all_no_args(self):
@@ -83,6 +122,7 @@ class DoAllTests(unittest.TestCase):
     def test_teardown(self):
         """teardown the class"""
         pass
+
 
 if __name__ == "__main":
     unittest.main()
