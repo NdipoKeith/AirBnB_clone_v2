@@ -9,11 +9,13 @@ import pep8
 import unittest
 import mysql.connector
 from console import CommandInterpreter
-HBNBCommand = console.HBNBCommand
 
 
 class TestConsoleDocs(unittest.TestCase):
-    """Class for testing documentation of the console"""
+    """Class for testinig documentation of the console"""
+
+    HNBNBCommand = console.HNBNHCommand 
+
     def test_pep8_conformance_console(self):
         """Test that console.py conforms to PEP8."""
         pep8s = pep8.StyleGuide(quiet=True)
@@ -75,7 +77,7 @@ class Create_State(unittest.TestCase):
     def tearDown(self):
         """teardown the class"""
         self.cursor.close()
-        self.conn.clode()
+        self.conn.close()
 
 
 class CommandInterpreter(unittest.TestCase):
