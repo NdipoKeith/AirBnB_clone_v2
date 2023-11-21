@@ -1,13 +1,14 @@
 #!/usr/bin/python3
-<<<<<<< HEAD
 """
 Contains the class TestConsoleDocs
 """
-
+import os
 import console
 import inspect
 import pep8
 import unittest
+import mysql.connector
+from console import CommandInterpreter
 HBNBCommand = console.HBNBCommand
 
 
@@ -40,12 +41,6 @@ class TestConsoleDocs(unittest.TestCase):
                          "HBNBCommand class needs a docstring")
         self.assertTrue(len(HBNBCommand.__doc__) >= 1,
                         "HBNBCommand class needs a docstring")
-=======
-"""unittest for console.py"""
-import unittest
-from console import CommandInterpreter
-import os
-import mysql.connector
 
 
 class Create_State(unittest.TestCase):
@@ -168,4 +163,3 @@ class DoAllTests(unittest.TestCase):
 
 if __name__ == "__main":
     unittest.main()
->>>>>>> 9b0d7acde5f8f5a648b5869caca175cd3366da5e
