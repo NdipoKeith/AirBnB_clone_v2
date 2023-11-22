@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """ Console Module """
-
 import cmd
 import sys
 import os
@@ -117,28 +116,26 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, args):
-        """ Create an object of any class"""
-        if len(args) < 2:
-            print("** class name missing **")
-            return
-        class_name = args[0]
-        if class_name not in HBNBCommand.classes:
-            print("** class doesn't exist **")
-            return
-        params = {}
-        for args in args[1:]:
-            if "=" not in arg:
-                print("**Invalid parameter format: {} **".format(args))
-                return
-
-            key, value = arg.split("=")
-            params[key] = value
+        """ Create an object of a class"""
         try:
-            new_instance = HBNBCommand.classes[class_name](**params)
-            storage.save()
-            print("** Object created: {} **".format(new_instance.id))
-        except Exception as e:
-            print("** Invalid parameter: {} **".format(e))
+            if not args:
+                raise SyntaxError()
+            arg_list = args.split(" ")
+            kw = {}
+            for arg in arg_list[1:]:
+                arg_splited = arg.split("=")
+                arg_splited[1] = eval(arg_splited[1])
+                if type(arg_splited[1]) is str:
+                    arg_splited[1] = arg_splited[1].replace("_", " ") \
+                        .replace('"', '\\"')
+                kw[arg_splited[0]] = arg_splited[1]
+        except SyntaxError:
+            print("** class name missing **")
+        except NameError:
+            print("** class doesn't exist **")
+        new_instance = HBNBCommand.classes[arg_list[0]](**kw)
+        new_instance.save()
+        print(new_instance.id)
 
     def help_create(self):
         """ Help information for the create method """
@@ -201,7 +198,11 @@ class HBNBCommand(cmd.Cmd):
         key = c_name + "." + c_id
 
         try:
+<<<<<<< HEAD
+            del storage.all()[key]
+=======
             del (storage.all()[key])
+>>>>>>> 0fe9ab9a006afb93a27f09e07a6c5382622a255d
             storage.save()
         except KeyError:
             print("** no instance found **")
@@ -220,13 +221,17 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
+<<<<<<< HEAD
+            for k, v in storage.all(HBNBCommand.classes[args]).items():
+                print_list.append(str(v))
+=======
             for k, v in storage.all().items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
+>>>>>>> 0fe9ab9a006afb93a27f09e07a6c5382622a255d
         else:
             for k, v in storage.all().items():
                 print_list.append(str(v))
-
         print(print_list)
 
     def help_all(self):
