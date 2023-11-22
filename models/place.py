@@ -36,21 +36,6 @@ class Place(BaseModel, Base):
         amenity_ids = []
 
     @property
-    def amenities(self):
-        """returns review list instances with place_id equal to
-        Place.id
-        Will be the file storage rship between Place and Review
-        """
-        from models import storage
-        all_amenitites = storage.all(Amenity)
-        lst = []
-
-        for amen_1 in all_amenities.values():
-            if amen_1.id in self.amenity_ids:
-                list.append(amen_1)
-            return lst
-
-    @property
     def reviews(self):
         """returns list of amenity instance based on id contsined"""
         from models import storage
@@ -60,10 +45,25 @@ class Place(BaseModel, Base):
         for rev in all_reviews.values():
             if rev.place_id == self.id:
                 rev_lst.append(rev)
-            return rev_lst
+        return rev_lst
+
+    @property
+    def amenitites(self):
+        """returns a list of amenities associated with a place"""
+        from models import storage
+        all_amenities = storage.all(Amenity)
+        amen_list = []
+
+        for amen in all_amenities.values():
+            if amen.id in self.amenity_ids:
+                amen_llist.append(amen)
+        return aamen_list
 
     @amenities.setter
     def amenities(self, obj):
+        """adds or removes an amenity from the place"""
         if isinstance(obj, Amenity):
             if obj.id not in self.amenity_ids:
                 self.amenity_ids.append(obj.id)
+            else:
+                self.amenity_ids.remove(obj.id)
