@@ -8,6 +8,7 @@ from models.amenity import Amenity
 from models.review import Review
 from sqlalchemy.sql.schema import Table
 
+
 class Place(BaseModel, Base):
     """ A place to stay """
     __tablename__ = "places"
@@ -22,7 +23,7 @@ class Place(BaseModel, Base):
         price_by_night = Column(Integer, nullable=False, default=0)
         latitude = Column(Float, nullable=False)
         longitude = Column(Float, nullable=False)
-    
+
     else:
         city_id = ""
         user_id = ""
