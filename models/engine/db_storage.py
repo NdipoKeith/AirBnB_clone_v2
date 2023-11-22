@@ -38,6 +38,7 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
+        """queries on the current database session"""
         obj_dict = {}
         classes = [User, State, City, Place, Review]
 
@@ -71,6 +72,7 @@ class DBStorage:
             self.__session.delete(obj)
 
     def reload(self):
+        """Creates all tables in the database using the metadata"""
         Base.metadata.create_all(self.__engine)
         Base.metadata.bind = self.__engine
         session = sessionmaker(bind=self.__engine)
