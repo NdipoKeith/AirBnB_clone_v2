@@ -55,9 +55,9 @@ class DBStorage:
                 self.__session.add(obj)
                 self.__session.flush()
                 self.__session.refresh(obj)
-            except:
+            except Exception as err:
                 self.__session.rollback()
-                raise ex
+                raise err
 
     def save(self):
         """commit changes to db session"""
