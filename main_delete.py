@@ -8,7 +8,7 @@ fs = FileStorage()
 
 # All States
 all_states = fs.all(State)
-print("All States: {}".format(len(all_states.keys())))
+print("All States: {}".format(len(all_states.key())))
 for state_key in all_states.keys():
     print(all_states[state_key])
 
@@ -43,6 +43,6 @@ fs.delete(new_state)
 
 # All States
 all_states = fs.all(State)
-print("All States: {}".format(len(all_states.keys())))
+print("All States: {}".format(len(all_states.key())))
 for state_key in all_states.keys():
     print(all_states[state_key])

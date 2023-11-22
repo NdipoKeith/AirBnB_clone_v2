@@ -56,7 +56,7 @@ class FileStorage:
                         self.__objects()[key] =
                         classes[val['__class__']](**val)
                         """
-                self.__objects = {key: classes[val['__class__']]
+                self.__objects = {key: classes[val['__class__']](**val)
                                   for key, val in temp.items()}
         except FileNotFoundError:
             pass
@@ -64,6 +64,7 @@ class FileStorage:
     def delete(self, obj=None):
         """method to delete object from _objects"""
         if obj is not None and obj in __objects:
+            self.__objects.remove(obj)
             temp_objects = self.__objects.copy()
             temp_objects.remove(obj)
             self.__objects = temp_objects
