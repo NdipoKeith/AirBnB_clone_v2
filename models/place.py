@@ -62,7 +62,6 @@ class Place(BaseModel, Base):
                 amen_llist.append(amen)
         return aamen_list
 
-    @amenities.setter
     def amenities(self, obj):
         """adds or removes an amenity from the place"""
         if obj is not None:
