@@ -4,7 +4,7 @@ import uuid
 from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, DateTime, Boolean, ForeignKey
-from models import type_storage
+from models import storage_type
 
 Base = declarative_base()
 
@@ -29,7 +29,7 @@ class BaseModel:
                 elif key != "__class__":
                     setattr(self, key, kwargs[key])
 
-            if type_storage == 'db':
+            if storage_type == 'db':
                 if not hasattr(kwargs, 'id'):
                     setattr(self, 'id', str(uuid.uuid4()))
                 if not hasattr(kwargs, 'created_at'):

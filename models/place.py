@@ -62,7 +62,8 @@ class Place(BaseModel, Base):
                 rev_lst.append(rev)
             return rev_lst
 
-    @amenities.setter(self, obj):
+    @amenities.setter
+    def amenities(self, obj):
         if isinstance(obj, Amenity):
             if obj.id not in self.amenity_ids:
                 self.amenity_ids.append(obj.id)
