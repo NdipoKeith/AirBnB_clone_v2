@@ -81,5 +81,5 @@ class Place(BaseModel, Base):
     def amenities(self, obj):
         """adds or removes an amenity from the place"""
         if obj is not None:
-            if isinstance(obj, amenity):
+            if isinstance(obj, Amenity):
                 self.amenity_ids.append(obj.id)
