@@ -4,6 +4,22 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey, Integer, Float
 from sqlalchemy.orm import relationship
 from models import storage_type
+from models.amenity import Amenity
+from models.review import Review
+from sqlalchemy.sql.schema import Table
+
+if storage_type == 'db':
+    """column description can't be null"""
+    place_amenity = Table('place_amenity', Base.metadata,
+                          Column('place_id', String(60),
+                                 ForeignKey=('places.id'),
+                                 primary_key=True,
+                                 nullable=False),
+                          Column('amenities_id', String(60),
+                                 ForeignKey=('amenities.id'),
+                                 primary_key=True,
+                                 nullable=False)
+                          )
 
 
 class Place(BaseModel, Base):
@@ -20,7 +36,10 @@ class Place(BaseModel, Base):
         price_by_night = Column(Integer, nullable=False, default=0)
         latitude = Column(Float, nullable=False)
         longitude = Column(Float, nullable=False)
-        amenity_ids = []
+        reviews = relationship('Review', backref='place',
+                               cascase="all, delete, delete-orphan")
+        amenitites = relationship('Amenity', secondary=place_amenity,
+                                  viewonly=False, BACKREF='place_amenities')
 
     else:
         city_id = ""
@@ -59,11 +78,8 @@ class Place(BaseModel, Base):
                 amen_llist.append(amen)
         return aamen_list
 
-    @amenities.setter
     def amenities(self, obj):
         """adds or removes an amenity from the place"""
-        if isinstance(obj, Amenity):
-            if obj.id not in self.amenity_ids:
+        if obj is not None:
+            if isinstance(obj, amenity):
                 self.amenity_ids.append(obj.id)
-            else:
-                self.amenity_ids.remove(obj.id)
