@@ -8,20 +8,6 @@ from models.amenity import Amenity
 from models.review import Review
 from sqlalchemy.sql.schema import Table
 
-if storage_type == 'db':
-    """column description can't be null"""
-    place_amenity = Table('place_amenity', Base.metadata,
-                          Column('place_id', String(60),
-                                 ForeignKey=('places.id'),
-                                 primary_key=True,
-                                 nullable=False),
-                          Column('amenities_id', String(60),
-                                 ForeignKey=('amenities.id'),
-                                 primary_key=True,
-                                 nullable=False)
-                          )
-
-
 class Place(BaseModel, Base):
     """ A place to stay """
     __tablename__ = "places"
@@ -36,11 +22,7 @@ class Place(BaseModel, Base):
         price_by_night = Column(Integer, nullable=False, default=0)
         latitude = Column(Float, nullable=False)
         longitude = Column(Float, nullable=False)
-        reviews = relationship('Review', backref='place',
-                               cascase="all, delete, delete-orphan")
-        amenitites = relationship('Amenity', secondary=place_amenity,
-                                  viewonly=False, BACKREF='place_amenities')
-
+    
     else:
         city_id = ""
         user_id = ""
