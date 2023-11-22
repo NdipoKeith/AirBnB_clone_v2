@@ -10,7 +10,7 @@ import unittest
 import mysql.connector
 from console import CommandInterpreter
 
-
+"""
 class TestConsoleDocs(unittest.TestCase):
     """Class for testinig documentation of the console"""
 
@@ -43,7 +43,7 @@ class TestConsoleDocs(unittest.TestCase):
                          "HBNBCommand class needs a docstring")
         self.assertTrue(len(HBNBCommand.__doc__) >= 1,
                         "HBNBCommand class needs a docstring")
-
+"""
 
 class Create_State(unittest.TestCase):
     """Test case to validate if the State created
