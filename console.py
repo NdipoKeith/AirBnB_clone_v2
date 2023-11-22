@@ -2,8 +2,10 @@
 """ Console Module """
 import cmd
 import sys
+import os
+import datetime
 from models.base_model import BaseModel
-from models.__init__ import storage
+from models import storage
 from models.user import User
 from models.place import Place
 from models.state import State
@@ -23,7 +25,7 @@ class HBNBCommand(cmd.Cmd):
                'State': State, 'City': City, 'Amenity': Amenity,
                'Review': Review
               }
-    dot_cmds = ['all', 'count', 'show', 'destroy', 'update']
+    dot_cmds = ['all', 'count', 'show', 'destroy', 'create', 'update']
     types = {
              'number_rooms': int, 'number_bathrooms': int,
              'max_guest': int, 'price_by_night': int,
@@ -196,7 +198,11 @@ class HBNBCommand(cmd.Cmd):
         key = c_name + "." + c_id
 
         try:
+<<<<<<< HEAD
             del storage.all()[key]
+=======
+            del (storage.all()[key])
+>>>>>>> 0fe9ab9a006afb93a27f09e07a6c5382622a255d
             storage.save()
         except KeyError:
             print("** no instance found **")
@@ -215,8 +221,14 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
+<<<<<<< HEAD
             for k, v in storage.all(HBNBCommand.classes[args]).items():
                 print_list.append(str(v))
+=======
+            for k, v in storage.all().items():
+                if k.split('.')[0] == args:
+                    print_list.append(str(v))
+>>>>>>> 0fe9ab9a006afb93a27f09e07a6c5382622a255d
         else:
             for k, v in storage.all().items():
                 print_list.append(str(v))
