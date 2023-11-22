@@ -3,13 +3,13 @@
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey, Integer, Float
 from sqlalchemy.orm import relationship
-from models import type_storage
+from models import storage_type
 
 
 class Place(BaseModel, Base):
     """ A place to stay """
     __tablename__ = "places"
-    if type_storage == 'db':
+    if storage_type == 'db':
         city_id = Column(String(60), ForeignKey("cities.id"), nullable=False)
         user_id = Column(String(60), ForeignKey("users.id"), nullable=False)
         name = Column(String(128), nullable=False)
@@ -34,3 +34,35 @@ class Place(BaseModel, Base):
         latitude = 0.0
         longitude = 0.0
         amenity_ids = []
+
+    @property
+    def amenities(self):
+        """returns review list instances with place_id equal to
+        Place.id
+        Will be the file storage rship between Place and Review
+        """
+        from models import storage
+        all_amenitites = storage.all(Amenity)
+        lst = []
+
+        for amen_1 in all_amenities.values():
+            if amen_1.id in self.amenity_ids:
+                list.append(amen_1)
+            return lst
+
+    @property
+    def reviews(self):
+        """returns list of amenity instance based on id contsined"""
+        from models import storage
+        all_reviews = storage.all(Review)
+        rev_lst = []
+
+        for rev in all_reviews.values():
+            if rev.place_id == self.id:
+                rev_lst.append(rev)
+            return rev_lst
+
+    @amenities.setter(self, obj):
+        if isinstance(obj, Amenity):
+            if obj.id not in self.amenity_ids:
+                self.amenity_ids.append(obj.id)
