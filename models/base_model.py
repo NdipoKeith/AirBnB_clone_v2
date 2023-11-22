@@ -62,4 +62,5 @@ class BaseModel:
         return dictionary
 
     def delete(self):
+        """public instance method to delete instamce from storage"""
         models.storage.delete(self)
