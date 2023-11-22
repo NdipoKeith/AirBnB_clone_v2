@@ -16,4 +16,15 @@ class State(BaseModel, Base):
 
     else:
         name = ""
-        cities = ""
+
+        @property
+        def cities(self):
+            """rerurn list of cities instance of state_id equal to state.id"""
+
+            from models import storage
+            related_city = []
+            cities = storage.all(City)
+            for city in cities.value():
+                if city.state_id == self.id:
+                    related_city.append(city)
+            return related_city
