@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ Place Module for HBNB project """
+
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, ForeignKey, Integer, Float
 from sqlalchemy.orm import relationship
@@ -39,7 +40,7 @@ class Place(BaseModel, Base):
 
     @property
     def reviews(self):
-        """returns list of amenity instance based on id contsined"""
+        """returns list of amenity instance based on id contained"""
         from models import storage
         all_reviews = storage.all(Review)
         rev_lst = []
