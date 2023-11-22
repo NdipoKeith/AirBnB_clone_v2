@@ -16,8 +16,7 @@ class State(BaseModel, Base):
 
     else:
         name = ""
-        city = ""
-"""
+        
         @property
         def cities(self):
             """rerurn list of cities instance of state_id equal to state.id"""
@@ -29,4 +28,3 @@ class State(BaseModel, Base):
                 if city.state_id == self.id:
                     related_city.append(city)
             return related_city
-            """
