@@ -3,9 +3,11 @@
 import uuid
 from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, String, DateTime, Boolean 
+from sqlalchemy import Column, String, DateTime, Boolean
 
 Base = declarative_base()
+
+
 class BaseModel:
     """A base class for all hbnb models"""
     id = Column(String(60), nullable=False, Primarykey=True)
@@ -25,11 +27,8 @@ class BaseModel:
                 if key != "__class__":
                     setattr(self, key, value)
                 if key == "created_at" or key == "updated_at":
-                    setattr(self, key, datetime.strptime(value,"%Y-%m-%dT%H:%M:%S.%F"))
-            """
-            del kwargs['__class__']
-            self.__dict__.update(kwargs)
-            """
+                    setattr(self, key, datetime.strptime(
+                        value, "%Y-%m-%dT%H:%M:%S.%F"))
 
     def __str__(self):
         """Returns a string representation of the instance"""
@@ -49,7 +48,7 @@ class BaseModel:
         dictionary.update(self.__dict__)
         if "_sa_instance_state" in dictionary.key():
             dictionary.pop("_sa_instance_state")
-        
+
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
         return dictionary
